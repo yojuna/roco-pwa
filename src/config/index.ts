@@ -52,6 +52,8 @@ const defaultMetaTags = {
 };
 const giphy404 = 'https://giphy.com/embed/xTiN0L7EW5trfOvEk0';
 
+const ngrok_uri = '9c06-2001-4dd5-aa75-0-494a-830b-22cc-6dfd.eu.ngrok.io';
+
 export {
   loader,
   notifications,
@@ -62,4 +64,5 @@ export {
   title,
   defaultMetaTags,
   giphy404,
+  ngrok_uri,
 };
