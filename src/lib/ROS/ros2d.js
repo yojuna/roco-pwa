@@ -3,6 +3,11 @@
  * @author Russell Toris - rctoris@wpi.edu
  */
 
+ import 'latest-createjs'
+ // import 'createjs'
+ import ROSLIB from 'roslib'
+ import EventEmitter2 from 'eventemitter2'
+
 var ROS2D = ROS2D || {
   /**
    * @description Library version
@@ -1204,3 +1209,4 @@ ROS2D.ZoomView.prototype.zoom = function(zoom) {
 	this.stage.y = this.startShift.y - (this.center.y-this.startShift.y) * (this.stage.scaleY/this.startScale.y - 1);
 };
 
+export default ROS2D

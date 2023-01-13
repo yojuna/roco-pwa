@@ -156,6 +156,7 @@ ROS2D.OccupancyGrid = function(options) {
 
   // internal drawing canvas
   var canvas = document.createElement('canvas');
+
   var context = canvas.getContext('2d');
 
   // save the metadata we need
@@ -1073,10 +1074,11 @@ ROS2D.Viewer = function(options) {
 
   // create the canvas to render to
   var canvas = document.createElement('canvas');
+  
   canvas.width = this.width;
   canvas.height = this.height;
   canvas.style.background = background;
-  document.getElementById(divID).appendChild(canvas);
+  // document.getElementById(divID).appendChild(canvas);
   // create the easel to use
   this.scene = new createjs.Stage(canvas);
 

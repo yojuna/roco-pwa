@@ -15,10 +15,10 @@ const routes: Routes = {
     title: 'Welcome',
     icon: HomeIcon,
   },
-  [Pages.Page1]: {
-    component: asyncComponentLoader(() => import('@/pages/Page1')),
-    path: '/page-1',
-    title: 'Page 1',
+  [Pages.NavMap]: {
+    component: asyncComponentLoader(() => import('@/pages/NavMap')),
+    path: '/navmap',
+    title: 'Nav Map',
     icon: GitHubIcon,
   },
   [Pages.Page2]: {

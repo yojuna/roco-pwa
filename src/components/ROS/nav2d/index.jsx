@@ -1,6 +1,8 @@
 import React, {Component} from 'react'
 import NAV2D from '@/lib/ROS/nav2d_react'
 import ROS2D from '@/lib/ROS/ros2d_react'
+// import NAV2D from '@/lib/ROS/nav2d'
+// import ROS2D from '@/lib/ROS/ros2d'
 import ROSLIB from 'roslib'
 import PropTypes from 'prop-types';
 import { ngrok_uri } from '@/config'
@@ -14,7 +16,7 @@ class Nav2d extends Component {
       width : this.props.width,
       height : this.props.height
     });
-    const nav = NAV2D.OccupancyGridClientNav({
+    const nav = new NAV2D.OccupancyGridClientNav({
       ros : ros,
       rootObject : viewer.scene,
       viewer : viewer,

@@ -1,3 +1,7 @@
+import 'latest-createjs'
+import ROS2D from './ros2d_react'
+import ROSLIB from 'roslib'
+
 /**
  * @author Russell Toris - rctoris@wpi.edu
  * @author Lars Kunze - l.kunze@cs.bham.ac.uk
@@ -353,3 +357,5 @@ NAV2D.OccupancyGridClientNav = function(options) {
     that.viewer.shift(client.currentGrid.pose.position.x, client.currentGrid.pose.position.y);
   });
 };
+
+export default NAV2D
