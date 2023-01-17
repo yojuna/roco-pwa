@@ -2,11 +2,11 @@ import isMobile from '@/utils/is-mobile';
 
 import type { Notifications } from './types';
 
-const title = 'React PWA';
+const title = 'ROCO PWA';
 
-const email = 'auther-email@gmail.com';
+const email = 'anujoy.chakraborty@igmr.rwth-aachen.de';
 
-const repository = 'https://github.com/suren-atoyan/react-pwa';
+const repository = 'https://github.com/yojuna/roco';
 
 const messages = {
   app: {
@@ -52,7 +52,7 @@ const defaultMetaTags = {
 };
 const giphy404 = 'https://giphy.com/embed/xTiN0L7EW5trfOvEk0';
 
-const ngrok_uri = '9c06-2001-4dd5-aa75-0-494a-830b-22cc-6dfd.eu.ngrok.io';
+const ngrok_uri = '0911-2001-4dd5-aa75-0-e06b-f66b-4d6-fc50.eu.ngrok.io';
 
 export {
   loader,

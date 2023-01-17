@@ -156,6 +156,9 @@ ROS2D.OccupancyGrid = function(options) {
 
   // internal drawing canvas
   var canvas = document.createElement('canvas');
+  canvas.id = 'ogmcanvas'
+  // var canvas = document.getElementById('canvas');
+  // console.log('vsef', canvas)
 
   var context = canvas.getContext('2d');
 
@@ -1073,12 +1076,15 @@ ROS2D.Viewer = function(options) {
   var background = options.background || '#111111';
 
   // create the canvas to render to
+  // document.getElementById(divID).removeChild(canvas);
   var canvas = document.createElement('canvas');
-  
   canvas.width = this.width;
   canvas.height = this.height;
-  canvas.style.background = background;
-  // document.getElementById(divID).appendChild(canvas);
+  // canvas.id = divID
+  // canvas.style.background = background;
+
+
+  document.getElementById(divID).appendChild(canvas);
   // create the easel to use
   this.scene = new createjs.Stage(canvas);
 
@@ -1086,11 +1092,26 @@ ROS2D.Viewer = function(options) {
   this.scene.y = this.height;
 
   // add the renderer to the page
+  
   document.getElementById(divID).appendChild(canvas);
 
+
+  // // update at 30fps
+  // createjs.Ticker.setFPS(30);
+
+
+
+  // createjs.Ticker.addEventListener('tick', this.scene);
   // update at 30fps
-  createjs.Ticker.setFPS(30);
-  createjs.Ticker.addEventListener('tick', this.scene);
+  createjs.Ticker.framerate = 30;
+  createjs.Ticker.on('tick', this.scene);  
+  
+
+
+
+
+
+
 };
 
 /**

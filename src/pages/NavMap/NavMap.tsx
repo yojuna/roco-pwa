@@ -7,79 +7,82 @@ import { FullSizeCenteredFlexBox, CenteredFlexBox } from '@/components/styled';
 import React, { useState, useEffect } from 'react'
 import { Joystick } from 'react-joystick-component';
 import { useROS } from '@/components/ROS'
-import Nav2D from '@/components/ROS/nav2d'
+import { NavMapComp } from '@/components/ROS/NavMapComp'
 import { Container, width } from '@mui/system';
+
+// react dev tools requirement; remove in prod deployment
+<script src="http://192.168.0.7:8097"></script>
 
 var listener: any = null;
 
 function NavMap() {
-  const { createListener, topics } = useROS();
-  const [ topic, setTopic ] = useState('/');
-  const [ queue, setQueue ] = useState(0);
-  const [ compression, setCompression ] = useState('none');
+  // const { createListener, topics } = useROS();
+  // const [ topic, setTopic ] = useState('/');
+  // const [ queue, setQueue ] = useState(0);
+  // const [ compression, setCompression ] = useState('none');
 
-  useEffect(() => {
-    handleTopic(topic);
-  });
+  // useEffect(() => {
+  //   handleTopic(topic);
+  // });
 
-  const unsubscribe = () => {
-    if (listener) {
-      console.log("Unsubscribing");
-      listener.unsubscribe();
-    }
-  }
+  // const unsubscribe = () => {
+  //   if (listener) {
+  //     console.log("Unsubscribing");
+  //     listener.unsubscribe();
+  //   }
+  // }
 
-  const handleTopic = (topicInput: string) => {
-    if (topic !== topicInput) {
-      setTopic(topicInput);
-      unsubscribe();
-      return;
-    }
+  // const handleTopic = (topicInput: string) => {
+  //   if (topic !== topicInput) {
+  //     setTopic(topicInput);
+  //     unsubscribe();
+  //     return;
+  //   }
 
-    unsubscribe();
-    listener = null;
+  //   unsubscribe();
+  //   listener = null;
 
-    for (var i in topics) {
-      if (topics[i].path == topicInput) {
-        listener = createListener( topics[i].path,
-                                   topics[i].msgType,
-                                   Number(queue),
-                                   compression);
-        break;
-      }
-    }
+  //   for (var i in topics) {
+  //     if (topics[i].path == topicInput) {
+  //       listener = createListener( topics[i].path,
+  //                                  topics[i].msgType,
+  //                                  Number(queue),
+  //                                  compression);
+  //       break;
+  //     }
+  //   }
 
-    if (listener) {
-      console.log("Subscribing to messages...");
-      listener.subscribe(handleMsg);
-    } else {
-      console.log("Topic >> '" + topic + "' not found...");
-    }
-  }
+  //   if (listener) {
+  //     console.log("Subscribing to messages...");
+  //     listener.subscribe(handleMsg);
+  //   } else {
+  //     console.log("Topic >> '" + topic + "' not found...");
+  //   }
+  // }
 
-  const handleQueue = (queueInput: any) => {
-    setQueue(queueInput);
-  }
+  // const handleQueue = (queueInput: any) => {
+  //   setQueue(queueInput);
+  // }
 
-  const handleCompression = (compInput: any) => {
-    setCompression(compInput);
-  }
+  // const handleCompression = (compInput: any) => {
+  //   setCompression(compInput);
+  // }
 
-  const handleMsg = (msg: string) => {
-    console.log(msg);
-  }
+  // const handleMsg = (msg: string) => {
+  //   console.log(msg);
+  // }
 
-  const handleStart = () => {
-    console.log('started'); 
-  }
+  // const handleStart = () => {
+  //   console.log('started'); 
+  // }
 
-  const handleMove = () => {
-    console.log('moved'); 
-  }
+  // const handleMove = () => {
+  //   console.log('moved'); 
+  // }
 
-  const handleStop = () => {
-    console.log('stopped'); 
-  }
+  // const handleStop = () => {
+  //   console.log('stopped'); 
+  // }
 
 
 
@@ -87,33 +90,37 @@ function NavMap() {
     <>
       <Meta title="Nav Map" />
       <FullSizeCenteredFlexBox>
-        <Nav2D id='OGMMap' width={300} height={300} serverName='/map'/>
-        <Grid2 container spacing={2} disableEqualOverflow>
-          <Grid2 xs={12}>
-            <Typography variant="h4">ROS CONNECT</Typography>
-            <br></br>
-            <Typography variant="h6">Message Queue Length:</Typography>
-            <input name="queueInput" defaultValue={ queue } onChange={event => handleQueue(event.target.value)} />
-            <br></br>
-            <Typography variant="h6">Compression:</Typography>
-            <input name="compInput" defaultValue={ compression } onChange={event => handleCompression(event.target.value)} />
-            <br></br>
-            <Typography variant="h6">Topic to echo:</Typography>
-            <input name="topicInput" defaultValue={ topic } onChange={event => handleTopic(event.target.value)} />
-          </Grid2>
-          <Grid2 xs={12}>
-            <Container>
-              <Nav2D id='OGMMap' width={300} height={300} serverName='/map'/>
-            </Container>
-            <Container>
-              <Joystick start={handleStart} move={handleMove} stop={handleStop}/>
-            </Container>
-
-          </Grid2>
-        </Grid2>
+        <NavMapComp width={300} height={500} divID='navmap' serverName='/map'/>
 
       </FullSizeCenteredFlexBox>
     </>
+
+
+// <Grid2 container spacing={2} disableEqualOverflow>
+// <Grid2 xs={12}>
+//   <Typography variant="h4">ROS CONNECT</Typography>
+//   <br></br>
+//   <Typography variant="h6">Message Queue Length:</Typography>
+//   <input name="queueInput" defaultValue={ queue } onChange={event => handleQueue(event.target.value)} />
+//   <br></br>
+//   <Typography variant="h6">Compression:</Typography>
+//   <input name="compInput" defaultValue={ compression } onChange={event => handleCompression(event.target.value)} />
+//   <br></br>
+//   <Typography variant="h6">Topic to echo:</Typography>
+//   <input name="topicInput" defaultValue={ topic } onChange={event => handleTopic(event.target.value)} />
+// </Grid2>
+// <Grid2 xs={12}>
+//   <Container>
+//     <Nav2D id='navmap' width={300} height={300} serverName='/map'/>
+//   </Container>
+//   <Container>
+//     <Joystick start={handleStart} move={handleMove} stop={handleStop}/>
+//   </Container>
+
+// </Grid2>
+// </Grid2>
+
+
 
       // <Typography variant="h5">ROS CONNECT</Typography>
       //   <br></br>
