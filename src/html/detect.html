@@ -1,0 +1,338 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+
+    <title>Live Object Detection</title>
+    <link rel="manifest" href="../pwa/pwa.webmanifest">
+    <link rel="apple-touch-icon" href="../images/apple-touch.png">
+    <link rel="shortcut icon" type="image/jpg" href="../images/favicon.ico"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="theme-color" content="#764ABC"/>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+
+
+    <script src="../lib/mqtt.min.js"></script>
+    <script src="../pwa/status.js"></script>
+    <script src="../pwa/pwa.js"></script>
+    <!-- <script type=module src="../lib/nipplejs.js"></script> -->
+
+    <!--  CSS -->
+    <!-- <script src="//cdn.bootcss.com/bootstrap-slider/9.4.1/bootstrap-slider.min.js"></script> -->
+    <link rel="stylesheet" href="../css/bootstrap.min.css"/>
+    <!-- Bootstrap CSS CDN -->
+    <!-- <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.0/css/bootstrap.min.css" integrity="sha384-9gVQ4dYFwwWSjIDZnLEWnxCjeSWFphJiwGPXr1jddIhOegiu1FwO5qRGvFXOdJZ4" crossorigin="anonymous"> -->
+    <!-- <link rel="stylesheet" href="../css/material-components-web.min.css"> -->
+    <link rel="stylesheet" href="../css/style_detect.css"/>
+
+    <!-- scripts -->
+    <!-- Import TensorFlow.js library -->
+    <script src="../lib/cocossd_detection/tf.min.js"></script>
+    <!-- Load the coco-ssd model to use to recognize things in images -->
+    <script src="../lib/cocossd_detection/coco-ssd.js"></script>
+    <!-- <script src="https://cdn.jsdelivr.net/npm/@tensorflow-models/coco-ssd"></script> -->
+
+
+    <!-- <script type=module src="../lib/material-components-web.min.js"></script> -->
+
+
+    <script src="../lib/cocossd_detection/material-components-web.js"></script>
+    <link href="../css/material-components-web.css" rel="stylesheet">
+
+    <script type=module src="../js/detect.js"></script>
+    <!-- <script src="../js/detect.js"></script> -->
+
+    <!-- Font Awesome JS -->
+    <!-- <script defer src="https://use.fontawesome.com/releases/v5.0.13/js/solid.js" integrity="sha384-tzzSw1/Vo+0N5UhStP3bvwWPq+uvzCMfrN1fEFe+xBmv1C/AtVX5K0uZtmcHitFZ" crossorigin="anonymous"></script>
+    <script defer src="https://use.fontawesome.com/releases/v5.0.13/js/fontawesome.js" integrity="sha384-6OIrr52G08NpOFSZdxxz1xdNSndlD4vdcf/q2myIUVO0VsqaGHJsB0RaBE01VTOY" crossorigin="anonymous"></script> -->
+
+
+
+  </head>
+  <body>
+
+<div class="outer_container">
+
+  <!-- <nav class="navbar navbar-expand-lg navbar-light bg-light">
+    <a class="navbar-brand" href="#">Navbar</a>
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarNav">
+      <ul class="navbar-nav">
+        <li class="nav-item">
+          <a class="nav-link" href="/">Index</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="/sensors">Sensors</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="/comm">PUBSUB</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="/control">Control</a>
+          </li>
+        <li class="nav-item active">
+          <a class="nav-link" href="/detect">Detect <span class="sr-only">(current)</span></a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link disabled" href="#">Disabled</a>
+        </li>
+      </ul>
+    </div>
+  </nav> -->
+
+
+  <!-- <nav class="navbar navbar-expand-lg navbar-light bg-light">
+    <a class="navbar-brand" href="#">PWA</a>
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarNav">
+      <ul class="navbar-nav">
+        <li class="nav-item active">
+          <a class="nav-link" href="/detect">Detect <span class="sr-only">(current)</span></a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="#">Features</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="#">Pricing</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link disabled" href="#">Disabled</a>
+        </li>
+      </ul>
+    </div>
+  </nav> -->
+
+
+
+    <div>
+      <!-- <div class="spinner-border text-primary"
+          id="spinner" role="status">
+          <span class="sr-only">Loading...</span>
+      </div> -->
+      <section id="demos" class="invisible">
+        <!-- <h2>Demo: Classifying Images</h2>
+        <p><em>Click on an image below</em> to try and recognize what is in the image using the power of Machine Learning! Notice how in this demo we not only know if the object is in the image, but also its position in the image. Very useful.</p>
+
+        <div class="classifyOnClick">
+          <img src="https://cdn.glitch.com/74418d0b-3465-49a2-8c71-a721b7734473%2Fdoggo.jpg?v=1592266725716" crossorigin="anonymous" title="Click to get classification!" />
+        </div>
+        <div class="classifyOnClick">
+          <img src="https://cdn.glitch.com/74418d0b-3465-49a2-8c71-a721b7734473%2Fcoupledog.jpg?v=1591311552891" crossorigin="anonymous" title="Click to get classification!" />
+        </div> -->
+
+        <div id="liveView" class="videoView">
+          <button id="webcamButton">predict</button>
+          <video id="webcam" autoplay></video>
+        </div>
+      </section>
+
+
+      <div id="slider">
+        <!-- NED specs
+        Joints range degrees
+        -170 ° ≤ Joint 1 ≤ 170 °
+        -120 ° ≤ Joint 2 ≤ 35 °
+        -77 ° ≤ Joint 3 ≤ 90 °
+        -120 ° ≤ Joint 4 ≤ 120 °
+        -100 ° ≤ Joint 5 ≤ 55 °
+        -145 ° ≤ Joint 6 ≤ 145 °
+
+        Joints range radian
+        -2,97 rad ≤ Joint 1 ≤ 2,97 rad
+        -2,09 rad ≤ Joint 2 ≤ 0,61 rad
+        -1.34 rad ≤ Joint 3 ≤ 1,57 rad
+        -2,09 rad ≤ Joint 4 ≤ 2,09 rad
+        -1,75 rad ≤ Joint 5 ≤ 0,96 rad
+        -2,53 rad ≤ Joint 6 ≤ -2,53 rad -->
+        <!-- <br> -->
+        <div id ="slider_inner">
+          <!-- <br> -->
+          <div class="slider_1_container">
+            <span>joint_1: <b id="slider_1_val">-</b></span>
+            <input type="range" class="form-range" min="-170" max="170" step="1.00" value="0.00" id="slider_1" list="ticks1">
+            <datalist id="ticks1">
+              <option value="-170" label="[ -170 ,  -2.97 ]" id="tick1"></option>
+              <!-- <option value="0" label="[0, 0]"></option> -->
+              <option value="0"></option>
+              <option value="170" label="[170, 2.97]"></option>
+            </datalist>
+          </div>
+          <!-- <br> -->
+          <div class="slider_2_container">
+            <span>joint_2: <b id="slider_2_val">-</b></span>
+            <input type="range" class="form-range" min="-120" max="35" step="1.00" value="0.00" id="slider_2" list="ticks2">
+            <datalist id="ticks2">
+              <option value="-120" label="[ -120 ,  -2.09 ]"></option>
+              <!-- <option value="0" label="[0, 0]"></option> -->
+              <option value="0"></option>
+              <option value="35" label="[35, 0.61]"></option>
+            </datalist>
+
+            <!-- <input type="range" class="form-range" min="1" max="10" step="1" value="5" id="slider_2">
+            <span><b id="slider_2_val">-</b></span> -->
+          </div>
+          <!-- <br> -->
+          <div class="slider_3_container">
+            <span>joint_3: <b id="slider_3_val">-</b></span>
+            <input type="range" class="form-range" min="-77" max="90" step="1.00" value="0.00" id="slider_3" list="ticks3">
+            <datalist id="ticks3">
+              <option value="-77" label="[-77, -1.34]" id="tick1"></option>
+              <!-- <option value="0" label="[0, 0]"></option> -->
+              <option value="0"></option>
+              <option value="90" label="[90, 1.57]"></option>
+            </datalist>
+
+            <!-- <input type="range" class="form-range" min="1" max="10" step="1" value="5" id="slider_3">
+            <span><b id="slider_3_val">-</b></span> -->
+          </div>
+          <!-- <br> -->
+          <div class="slider_4_container">
+            <span>joint_4: <b id="slider_4_val">-</b></span>
+            <input type="range" class="form-range" min="-120" max="120" step="1.00" value="0.00" id="slider_4" list="ticks4">
+            <datalist id="ticks4">
+              <option value="-170" label="[-120, -2.09]" id="tick1"></option>
+              <!-- <option value="0" label="[0, 0]"></option> -->
+              <option value="0"></option>
+              <option value="170" label="[120, 2.09]"></option>
+            </datalist>
+            <!-- <input type="range" class="form-range" min="1" max="10" step="1" value="5" id="slider_4">
+            <span><b id="slider_4_val">-</b></span> -->
+          </div>
+          <!-- <br> -->
+
+<!--
+          -2,97 rad ≤ Joint 1 ≤ 2,97 rad
+          -2,09 rad ≤ Joint 2 ≤ 0,61 rad
+          -1.34 rad ≤ Joint 3 ≤ 1,57 rad
+          -2,09 rad ≤ Joint 4 ≤ 2,09 rad
+          -1,75 rad ≤ Joint 5 ≤ 0,96 rad
+          -2,53 rad ≤ Joint 6 ≤ -2,53 rad -->
+
+          <div class="slider_5_container">
+            <span>joint_5: <b id="slider_5_val">-</b></span>
+            <input type="range" class="form-range" min="-100" max="55" step="1.00" value="0.00" id="slider_5" list="ticks5">
+            <datalist id="ticks5">
+              <option value="-170" label="[-100, -1.75]" id="tick1"></option>
+              <!-- <option value="0" label="[0, 0]"></option> -->
+              <option value="0"></option>
+              <option value="170" label="[55, 0.96]"></option>
+            </datalist>
+            <!-- <input type="range" class="form-range" min="1" max="10" step="1" value="5" id="slider_5">
+            <span><b id="slider_5_val">-</b></span> -->
+          </div>
+          <!-- <br> -->
+          <div class="slider_6_container">
+            <span>joint_6: <b id="slider_6_val">-</b></span>
+            <input type="range" class="form-range" min="-145" max="145" step="1.00" value="0.00" id="slider_6" list="ticks6">
+            <datalist id="ticks6">
+              <option value="-170" label="[-170, -2.53]" id="tick1"></option>
+              <!-- <option value="0" label="[0, 0]"></option> -->
+              <option value="0"></option>
+              <option value="170" label="[170, 2.53]"></option>
+            </datalist>
+            <!-- <input type="range" class="form-range" min="1" max="10" step="1" value="5" id="slider_6">
+            <span><b id="slider_6_val">-</b></span> -->
+          </div>
+        </div>
+        <!-- <div class="mdc-slider mdc-slider--discrete mdc-slider--tick-marks">
+          <input class="mdc-slider__input form-range" type="range" min="-170" max="170" value="0"  name="volume" step="10" list="ticks7" aria-label="Discrete slider with tick marks demo">
+          <div class="mdc-slider__track">
+            <div class="mdc-slider__track--inactive"></div>
+            <div class="mdc-slider__track--active">
+              <div class="mdc-slider__track--active_fill"></div>
+            </div>
+            <div class="mdc-slider__tick-marks">
+              <div class="mdc-slider__tick-mark--active"></div>
+              <div class="mdc-slider__tick-mark--active"></div>
+              <div class="mdc-slider__tick-mark--active"></div>
+              <div class="mdc-slider__tick-mark--active"></div>
+              <div class="mdc-slider__tick-mark--active"></div>
+              <div class="mdc-slider__tick-mark--active"></div>
+              <div class="mdc-slider__tick-mark--inactive"></div>
+              <div class="mdc-slider__tick-mark--inactive"></div>
+              <div class="mdc-slider__tick-mark--inactive"></div>
+              <div class="mdc-slider__tick-mark--inactive"></div>
+              <div class="mdc-slider__tick-mark--inactive"></div>
+            </div>
+          </div>
+          <div class="mdc-slider__thumb">
+            <div class="mdc-slider__value-indicator-container" aria-hidden="true">
+              <div class="mdc-slider__value-indicator">
+                <span class="mdc-slider__value-indicator-text">
+                  <span><b id="slider_7_val">-</b></span>
+                </span>
+              </div>
+            </div>
+            <div class="mdc-slider__thumb-knob"></div>
+          </div>
+
+
+        <datalist id="ticks7">
+          <option value="-170" label="[-170, -2.967]" id="tick7"></option>
+          <option value="0" label="[0, 0]"></option>
+          <option value="170" label="[170, 2.967]"></option>
+        </datalist>
+        </div> -->
+      </div>
+
+          <!-- <br> -->
+      </div>
+
+
+
+
+
+    <!-- <h1>Multiple object detection using pre trained model in TensorFlow.js</h1>
+
+    <header class="note">
+      <h2>Difficulty: Easy</h2>
+    </header>
+
+    <h2>How to use</h2>
+    <p>Please wait for the model to load before trying the demos below at which point they will become visible when ready to use.</p> -->
+
+    <!-- <footer class="note">
+      <p>
+        <em>Please note:</em> This demo loads our desired machine learning model via <a href="https://github.com/tensorflow/tfjs-models/tree/master/coco-ssd" title="View TensorFlow.js COCO-SSD on our GitHub">an easy to use JavaScript class</a> made by the TensorFlow.js team to do the hard work for you. No machine learning knowledge is needed to use this. View the link to learn more about fine tuning this machine learning model. See our other tutorials if you want to load a model directly yourself, or recognize a custom object using your own data.
+      </p>
+      <p>
+        <a href="https://glitch.com/~tensorflow-js-object-detection">See the README.md or the project page for more information</a>.
+      </p>
+    </footer> -->
+
+    <!-- Import the page's JavaScript to do some stuff -->
+    <!-- <script src="/script.js"></script> -->
+
+    </div>
+
+  </body>
+</html>
+
+
+
+
+    <!-- Header Nav Bar -->
+  <!-- <div id="nav_bar">
+    <ul class="nav nav-tabs">
+        <li class="nav-item">
+          <a class="nav-link" href="/">Index</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="/sensors">Sensors</a>
+          </li>
+        <li class="nav-item">
+          <a class="nav-link" href="/comm">PUBSUB</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="/control">Control</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link active" href="/detect">Detection</a>
+        </li>
+    </ul>
+  </div>
+ -->

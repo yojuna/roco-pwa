@@ -1,0 +1,62 @@
+<html>
+
+<head>
+  <title>Augmented Reality Marker Detector</title>
+
+  <link rel="manifest" href="../pwa/pwa.webmanifest">
+  <link rel="apple-touch-icon" href="../images/apple-touch.png">
+  <link rel="shortcut icon" type="image/jpg" href="../images/favicon.ico"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#764ABC"/>
+
+  <script type="text/javascript" src="../js/aruco.js"></script>
+
+  <script src="../lib/stats.min.js"></script>
+  <script type="text/javascript" src="../lib/aruco/aruco_polyfill.js"></script>
+  <script type="text/javascript" src="../lib/aruco/Three.js"></script>
+  <script type="text/javascript" src="../lib/aruco/svd.js"></script>
+  <script type="text/javascript" src="../lib/aruco/posit2.js"></script>
+  <script type="text/javascript" src="../lib/aruco/aruco_cv.js"></script>
+  <script type="text/javascript" src="../lib/aruco/aruco_ar.js"></script>
+
+
+
+</head>
+
+<!-- <body style="text-align: center; font-family: monospace;">
+
+  <video id="video" width=320 height=240 autoplay="true" style="display:none;"></video>
+
+  <div style="margin: 10px;"><strong>-= Augmented Reality =-</strong></div>
+  <div style="width: 100%;">
+    <div style="width: 100%; margin-left:auto; margin-right:auto;">
+      <canvas id="canvas" style="width:100%; float: left; border: solid 1px black;"></canvas>
+      <div id="container" style="width:100%; float: left; border: solid 1px black; background: green;"></div>
+      <div style="clear: both;"></div>
+      <div style="float: left; border: solid 1px black;">
+        <div id="container1" style="width: 320px; height: 240px; background: red;"></div>
+        <div id="pose1"></div>
+      </div>
+      <div style="float: left; border: solid 1px black;">
+        <div id="container2" style="width: 320px; height: 240px; background: blue;"></div>
+        <div id="pose2"></div>
+      </div>
+    </div>
+  </div>
+  <div style="clear: both;"></div>
+  <div style="margin: 15px;"><strong>Powered by <a href="http://code.google.com/p/js-aruco/">js-aruco</a> and <a href="https://github.com/mrdoob/three.js">Three.js</a></strong></div>
+
+</body> -->
+
+
+<!-- <body style="text-align: center; font-family: monospace;"> -->
+<body>
+  <div id="container">
+
+    <video id="video" playsinline autoplay style="display:none"></video>
+    <canvas id="canvas"></canvas>
+
+  </div>
+</body>
+
+</html>

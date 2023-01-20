@@ -1,0 +1,251 @@
+<!DOCTYPE html>
+<html>
+  <head>
+
+    <title>NED Control</title>
+    <link rel="manifest" href="../pwa/pwa.webmanifest">
+    <link rel="apple-touch-icon" href="../images/apple-touch.png">
+    <link rel="shortcut icon" type="image/jpg" href="../images/favicon.ico"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="theme-color" content="#764ABC"/>
+
+    <!-- scripts -->
+    <script type=module src="../js/slider_control.js"></script>
+
+    <script src="../lib/mqtt.min.js"></script>
+    <script src="../pwa/status.js"></script>
+    <script src="../pwa/pwa.js"></script>
+    <!-- <script type=module src="../lib/nipplejs.js"></script> -->
+
+    <!--  CSS -->
+<!-- <script src="//cdn.bootcss.com/bootstrap-slider/9.4.1/bootstrap-slider.min.js"></script> -->
+    <link rel="stylesheet" href="../css/bootstrap.min.css"/>
+    <link rel="stylesheet" href="../css/slider_control.css"/>
+
+  </head>
+
+  <body>
+      <!-- Header Nav Bar -->
+    <!-- <div id="nav_bar">
+      <ul class="nav nav-tabs">
+          <li class="nav-item">
+            <a class="nav-link" href="/">Index</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="/sensors">Sensors</a>
+            </li>
+          <li class="nav-item">
+            <a class="nav-link" href="/comm">PUBSUB</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link active" href="/control">Control</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="/detect">Detection</a>
+          </li>
+      </ul>
+    </div> -->
+
+    <div id="outerContainer">
+      <div id="video_container">
+        <div class="camera">
+          <video id="video">Video stream not available.</video>
+        </div>
+      </div>
+
+
+            <div id="slider">
+              <!-- NED specs
+              Joints range degrees
+              -170 ° ≤ Joint 1 ≤ 170 °
+              -120 ° ≤ Joint 2 ≤ 35 °
+              -77 ° ≤ Joint 3 ≤ 90 °
+              -120 ° ≤ Joint 4 ≤ 120 °
+              -100 ° ≤ Joint 5 ≤ 55 °
+              -145 ° ≤ Joint 6 ≤ 145 °
+
+              Joints range radian
+              -2,97 rad ≤ Joint 1 ≤ 2,97 rad
+              -2,09 rad ≤ Joint 2 ≤ 0,61 rad
+              -1.34 rad ≤ Joint 3 ≤ 1,57 rad
+              -2,09 rad ≤ Joint 4 ≤ 2,09 rad
+              -1,75 rad ≤ Joint 5 ≤ 0,96 rad
+              -2,53 rad ≤ Joint 6 ≤ -2,53 rad -->
+              <!-- <br> -->
+              <div id ="slider_inner">
+                <!-- <br> -->
+                <div class="slider_1_container">
+                  <span>joint_1: <b id="slider_1_val">-</b></span>
+                  <input type="range" class="form-range" min="-170" max="170" step="0.50" value="0.00" id="slider_1" list="ticks1">
+                  <datalist id="ticks1">
+                    <option value="-170" label="[ -170 ,  -2.97 ]" id="tick1"></option>
+                    <option value="0" label="[0, 0]"></option>
+                    <option value="170" label="[170, 2.97]"></option>
+                  </datalist>
+                </div>
+                <!-- <br> -->
+                <div class="slider_2_container">
+                  <span>joint_2: <b id="slider_2_val">-</b></span>
+                  <input type="range" class="form-range" min="-120" max="35" step="0.50" value="0.00" id="slider_2" list="ticks2">
+                  <datalist id="ticks2">
+                    <option value="-120" label="[ -120 ,  -2.09 ]"></option>
+                    <option value="0" label="[0, 0]"></option>
+                    <option value="35" label="[35, 0.61]"></option>
+                  </datalist>
+
+                  <!-- <input type="range" class="form-range" min="1" max="10" step="1" value="5" id="slider_2">
+                  <span><b id="slider_2_val">-</b></span> -->
+                </div>
+                <!-- <br> -->
+                <div class="slider_3_container">
+                  <span>joint_3: <b id="slider_3_val">-</b></span>
+                  <input type="range" class="form-range" min="-77" max="90" step="1" value="0" id="slider_3" list="ticks3">
+                  <datalist id="ticks3">
+                    <option value="-77" label="[-77, -2.967]" id="tick1"></option>
+                    <option value="0" label="[0, 0]"></option>
+                    <option value="90" label="[90, 2.967]"></option>
+                  </datalist>
+
+                  <!-- <input type="range" class="form-range" min="1" max="10" step="1" value="5" id="slider_3">
+                  <span><b id="slider_3_val">-</b></span> -->
+                </div>
+                <!-- <br> -->
+                <div class="slider_4_container">
+                  <span>joint_4: <b id="slider_4_val">-</b></span>
+                  <input type="range" class="form-range" min="-170" max="170" step="1" value="0" id="slider_4" list="ticks4">
+                  <datalist id="ticks4">
+                    <option value="-170" label="[-170, -2.967]" id="tick1"></option>
+                    <option value="0" label="[0, 0]"></option>
+                    <option value="170" label="[170, 2.967]"></option>
+                  </datalist>
+                  <!-- <input type="range" class="form-range" min="1" max="10" step="1" value="5" id="slider_4">
+                  <span><b id="slider_4_val">-</b></span> -->
+                </div>
+                <!-- <br> -->
+                <div class="slider_5_container">
+                  <span>joint_5: <b id="slider_5_val">-</b></span>
+                  <input type="range" class="form-range" min="-170" max="170" step="1" value="0" id="slider_5" list="ticks5">
+                  <datalist id="ticks5">
+                    <option value="-170" label="[-170, -2.967]" id="tick1"></option>
+                    <option value="0" label="[0, 0]"></option>
+                    <option value="170" label="[170, 2.967]"></option>
+                  </datalist>
+                  <!-- <input type="range" class="form-range" min="1" max="10" step="1" value="5" id="slider_5">
+                  <span><b id="slider_5_val">-</b></span> -->
+                </div>
+                <!-- <br> -->
+                <div class="slider_6_container">
+                  <span>joint_6: <b id="slider_6_val">-</b></span>
+                  <input type="range" class="form-range" min="-170" max="170" step="1" value="0" id="slider_6" list="ticks6">
+                  <datalist id="ticks6">
+                    <option value="-170" label="[-170, -2.967]" id="tick1"></option>
+                    <option value="0" label="[0, 0]"></option>
+                    <option value="170" label="[170, 2.967]"></option>
+                  </datalist>
+                  <!-- <input type="range" class="form-range" min="1" max="10" step="1" value="5" id="slider_6">
+                  <span><b id="slider_6_val">-</b></span> -->
+                </div>
+                <!-- <br> -->
+            </div>
+            </div>
+
+
+
+
+      <!-- <div id="slider">
+        <div id ="slider_inner">
+          <br>
+          <div class="slider_1_container">
+            <input type="range" class="form-range" min="1" max="10" step="1" value="50" id="slider_1">
+            <span><b id="slider_1_val">-</b></span>
+          </div>
+          <br>
+          <div class="slider_2_container">
+            <input type="range" class="form-range" min="1" max="10" step="1" value="50" id="slider_2">
+            <span><b id="slider_2_val">-</b></span>
+          </div>
+          <br>
+          <div class="slider_3_container">
+            <input type="range" class="form-range" min="1" max="10" step="1" value="50" id="slider_3">
+            <span><b id="slider_3_val">-</b></span>
+          </div>
+          <br>
+          <div class="slider_4_container">
+            <input type="range" class="form-range" min="1" max="10" step="1" value="50" id="slider_4">
+            <span><b id="slider_4_val">-</b></span>
+          </div>
+          <br>
+          <div class="slider_5_container">
+            <input type="range" class="form-range" min="1" max="10" step="1" value="50" id="slider_5">
+            <span><b id="slider_5_val">-</b></span>
+          </div>
+          <br>
+          <div class="slider_6_container">
+            <input type="range" class="form-range" min="1" max="10" step="1" value="50" id="slider_6">
+            <span><b id="slider_6_val">-</b></span>
+          </div>
+          <br>
+      </div>
+      </div> -->
+    </div>
+
+  </body>
+</html>
+
+
+
+    <!-- <video id="video" autoplay></video> -->
+    <!-- <div class="contentarea">
+
+      <div class="card" style="width: 18rem;" id="slider_base">
+        <div class="card-body">
+          <div class="sliders">
+
+            <div class="slider_1">
+              <span><b id="slider_1_val">-</b></span>
+              <input type="range" class="form-range" min="1" max="10" step="1" value="50" id="slider_1">
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="camera">
+        <div></div>
+        <video id="video">Video stream not available.</video>
+      </div>
+
+    </div> -->
+
+
+<!--  -->
+
+
+<!-- <div>
+  <span><b id="slider_1_val">-</b></span>
+  <div class="slidecontainer">
+    <input type="range" min="1" max="100" value="50" class="slider" id="myRange">
+  </div> -->
+<!-- <input id="ex1" data-slider-id='ex1Slider' type="text" data-slider-min="0" data-slider-max="20" data-slider-step="1" data-slider-value="14"/> -->
+<!-- <label for="slider_1" class="form-label">Joint 1</label>
+<input id="joint_1" data-slider-id="joint_1_slider" type="text"/> -->
+<!-- <input id="joint_1" type="text" data-slider-handle="custom"/> -->
+<!-- <input type="range" class="form-range" min="0" max="5" step="0.5" id="slider_1"> -->
+<!-- </div> -->
+<!-- <div class="display-cover">
+<video autoplay></video>
+<canvas class="d-none"></canvas>
+
+<div class="video-options">
+    <select name="" id="" class="custom-select">
+        <option value="">Select camera</option>
+    </select>
+</div>
+
+<img class="screenshot-image d-none" alt="">
+
+<div class="controls">
+    <button class="btn btn-danger play" title="Play"><i data-feather="play-circle"></i></button>
+    <button class="btn btn-info pause d-none" title="Pause"><i data-feather="pause"></i></button>
+    <button class="btn btn-outline-success screenshot d-none" title="ScreenShot"><i data-feather="image"></i></button>
+</div>
+</div> -->

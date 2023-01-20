@@ -1,0 +1,22 @@
+{
+    "name": "roco robo controller",
+    "short_name": "roco",
+    "description": "ROCO: Web App PWA for controlling robots, developed at IGMR, RWTH Aachen University",
+    "icons": [
+      {
+        "src": "../images/splash-screen.png",
+        "sizes": "512x512",
+        "type": "image/png"
+      },
+      {
+        "src": "../images/manifest-icon_maskable.png",
+        "sizes": "192x192",
+        "type": "image/png",
+        "purpose": "any maskable"
+      }
+    ],
+    "start_url": "/src",
+    "display": "standalone",
+    "theme_color": "#764ABC",
+    "background_color": "#764ABC"
+  }
