@@ -5,15 +5,19 @@ import Grid2 from '@mui/material/Unstable_Grid2';
 import Meta from '@/components/Meta';
 import { FullSizeCenteredFlexBox, CenteredFlexBox } from '@/components/styled';
 import React, { useState, useEffect } from 'react'
-import { Joystick } from 'react-joystick-component';
+// import { Joystick } from 'react-joystick-component';
+import { Joystick } from '@/components/Joystick';
+// import Joystick from '@/components/ROS/TeleopJoystick/tmp'
 import { useROS } from '@/components/ROS'
 import { NavMapComp } from '@/components/ROS/NavMapComp'
 import { Container, width } from '@mui/system';
 
-// react dev tools requirement; remove in prod deployment
-<script src="http://192.168.0.7:8097"></script>
+import "./style.css";
 
-var listener: any = null;
+// react dev tools requirement; remove in prod deployment
+{/* <script src="http://192.168.0.7:8097"></script> */}
+
+// var listener = null;
 
 function NavMap() {
   // const { createListener, topics } = useROS();
@@ -72,15 +76,30 @@ function NavMap() {
   //   console.log(msg);
   // }
 
-  // const handleStart = () => {
+
+//   handleJoystickStart = (evt, data) => {
+//     this.setState({ data });
+// };
+// handleJoystickEnd = (evt, data) => {
+//     this.setState({ data });
+// };
+// handleJoystickMove = (evt, data) => {
+//     this.setState({ data });
+// };
+
+
+  // const handleStart = (evt, data) => {
+  //   this.setState({ data });
   //   console.log('started'); 
   // }
 
-  // const handleMove = () => {
-  //   console.log('moved'); 
+  // const handleMove = (evt, data) => {
+  //   this.setState({ data });
+  //   console.log(data.direction);
   // }
 
-  // const handleStop = () => {
+  // const handleStop = (evt, data) => {
+  //   this.setState({ data });
   //   console.log('stopped'); 
   // }
 
@@ -90,12 +109,32 @@ function NavMap() {
     <>
       <Meta title="Nav Map" />
       <FullSizeCenteredFlexBox>
-        <NavMapComp width={300} height={500} divID='navmap' serverName='/map'/>
+
+        <Grid2 container spacing={2} disableEqualOverflow>
+          <Grid2 xs={10}>
+            <Container>
+              <NavMapComp divID='navmap' width={300} height={300} serverName='/map'/>
+            </Container>
+
+            <Container>
+              <Joystick />
+            </Container>
+
+          </Grid2>
+        </Grid2>
+
+
 
       </FullSizeCenteredFlexBox>
     </>
 
+// 
+// <Container>
+// <Joystick start={handleStart} move={handleMove} stop={handleStop}/>
+// </Container>
 
+
+/* <NavMapComp width={500} height={500} divID='navmap' serverName='/map'/> */
 // <Grid2 container spacing={2} disableEqualOverflow>
 // <Grid2 xs={12}>
 //   <Typography variant="h4">ROS CONNECT</Typography>

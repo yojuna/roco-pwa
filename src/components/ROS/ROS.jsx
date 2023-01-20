@@ -131,18 +131,21 @@ function useROS() {
 
   const handleConnect = () => {
     try {
-      ros.ROS.connect(ros.url)
-      ros.ROS.on('connection', () => {
-        // console.log(connect)
-        setROS(ros => ({ ...ros, isConnected: true }));  // seems to take awhile for the roslibjs library to report connected
-        setROS(ros => ({ ...ros, ROSConfirmedConnected: false }));
-        getTopics();
-        getServices();
-      })
 
-      ros.ROS.on('error', (error) => {  //gets a little annoying on the console, but probably ok for now
-        console.log(error);
-      })
+        console.log('at ros.jsx handleconnect: ',ros)
+        ros.ROS.connect(ros.url)
+        ros.ROS.on('connection', () => {
+          // console.log(connect)
+          setROS(ros => ({ ...ros, isConnected: true }));  // seems to take awhile for the roslibjs library to report connected
+          setROS(ros => ({ ...ros, ROSConfirmedConnected: false }));
+          getTopics();
+          getServices();
+        })
+
+        ros.ROS.on('error', (error) => {  //gets a little annoying on the console, but probably ok for now
+          console.log(error);
+        })
+
     } catch (e) {
       console.log(e);
     }

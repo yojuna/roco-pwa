@@ -52,7 +52,10 @@ const defaultMetaTags = {
 };
 const giphy404 = 'https://giphy.com/embed/xTiN0L7EW5trfOvEk0';
 
-const ngrok_uri = '0911-2001-4dd5-aa75-0-e06b-f66b-4d6-fc50.eu.ngrok.io';
+const ngrok_uri = '34e6-2001-4dd5-aa75-0-e4e6-1e0a-a3d1-cff6.eu.ngrok.io';
+
+// changing to true will import and use react-dev-tools at Root.tsx
+const activateRDV = false;
 
 export {
   loader,
@@ -65,4 +68,5 @@ export {
   defaultMetaTags,
   giphy404,
   ngrok_uri,
+  activateRDV,
 };

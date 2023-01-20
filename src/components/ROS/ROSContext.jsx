@@ -6,7 +6,7 @@ import {ngrok_uri} from '@/config'
 const ssl_url = 'wss://' + ngrok_uri
 
 const rosObj = {
-  ROS: new ROSLIB.Ros(),
+  ROS: new ROSLIB.Ros({url: ssl_url}),
   url: ssl_url,
   isConnected: false,
   ROSConfirmedConnected: false,

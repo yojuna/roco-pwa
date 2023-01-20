@@ -1082,8 +1082,6 @@ ROS2D.Viewer = function(options) {
   canvas.height = this.height;
   // canvas.id = divID
   // canvas.style.background = background;
-
-
   document.getElementById(divID).appendChild(canvas);
   // create the easel to use
   this.scene = new createjs.Stage(canvas);
@@ -1091,26 +1089,16 @@ ROS2D.Viewer = function(options) {
   // change Y axis center
   this.scene.y = this.height;
 
-  // add the renderer to the page
-  
+  // add the renderer to the page  
   document.getElementById(divID).appendChild(canvas);
-
 
   // // update at 30fps
   // createjs.Ticker.setFPS(30);
-
-
-
   // createjs.Ticker.addEventListener('tick', this.scene);
+
   // update at 30fps
   createjs.Ticker.framerate = 30;
   createjs.Ticker.on('tick', this.scene);  
-  
-
-
-
-
-
 
 };
 
