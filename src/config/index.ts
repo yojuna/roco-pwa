@@ -55,7 +55,7 @@ const giphy404 = 'https://giphy.com/embed/xTiN0L7EW5trfOvEk0';
 const ngrok_uri = '95c8-2001-4dd5-aa75-0-d4af-d0b7-681-bed8.eu.ngrok.io';
 
 // changing to true will import and use react-dev-tools at Root.tsx
-const activateRDV = true;
+const activateRDV = false;
 
 export {
   loader,
